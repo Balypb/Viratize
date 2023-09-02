@@ -6,22 +6,36 @@ import { GameGraphics, TileMapGraphics, TileGraphics, PlayerGraphics } from './g
 class GameGraphicsImpl extends GameGraphics {
   game: Phaser.Game;
 
-  constructor() {
+  constructor(...assets: string[]) {
     super();
     const config = {
       type: Phaser.AUTO,
       width: 800,
       height: 600,
       scene: {
-        preload: this.preload,
+        preload: () => this.preload(assets),
         create: this.create
       }
     };
     this.game = new Phaser.Game(config);
   }
 
-}
+  preload(assets: string[]) {
+    assets.forEach(asset => {
+      this.game.load.image(asset, `path/to/${asset}`);
+    });
+  }
 
+  create(assets: string[]) {
+    const centerX = this.game.config.width as number / 2;
+    const centerY = this.game.config.height as number / 2;
+
+    assets.forEach((asset, index) => {
+      const sprite = this.game.add.sprite(centerX, centerY + (index * 50), asset);
+      sprite.setOrigin(0.5, 0.5); // Center the sprite's origin
+    });
+  }
+}
 // Implementation of TileMapGraphics using Phaser
 class TileMapGraphicsImpl extends TileMapGraphics {
   // TileMapGraphics implementation will be based on the game's tile map data
