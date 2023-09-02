@@ -1,0 +1,24 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Run Tests",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+        "args": [
+          "--require",
+          "./setup.js",
+          "./core.test.js"
+        ],
+        "internalConsoleOptions": "openOnSessionStart",
+        "cwd": "${workspaceFolder}",
+        "protocol": "inspector",
+        "runtimeArgs": [
+          "--nolazy"
+        ],
+        "console": "integratedTerminal",
+        "outputCapture": "std"
+      }
+    ]
+  }
